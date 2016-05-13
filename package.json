@@ -1,0 +1,18 @@
+{
+  "name": "our",
+  "version": "1.0.0",
+  "description": "fhj",
+  "main": "fhj",
+  "scripts": {
+    "test": "fhj"
+  },
+  "repository": {
+    "type": "git",
+    "url": "fhj"
+  },
+  "keywords": [
+    "fhj"
+  ],
+  "author": "fhj",
+  "license": "UNLICENSED"
+}

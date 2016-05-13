@@ -1,0 +1,155 @@
+<html lang="en" class="translated-ltr"><head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="css/swiper.min.css">
+
+    <!-- Demo styles -->
+    <style>
+        html, body {
+            position: relative;
+            height: 100%;
+        }
+        body {
+            background: #000;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container {
+            width: 500px;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+            width: 816px;
+            margin-right: 10px;
+            text-align: center;
+        }
+        .swiper-slide img{
+            max-height: 100%;
+        }
+        .gallery-top {
+            height: 80%;
+            width: 500px;
+        }
+        .gallery-thumbs {
+            height: 20%;
+            box-sizing: border-box;
+            padding: 10px 0;
+        }
+        .gallery-thumbs .swiper-slide {
+            width: 25%;
+            height: 100%;
+            opacity: 0.4;
+        }
+        .gallery-thumbs .swiper-slide-active {
+            opacity: 1;
+        }
+
+    </style>
+<body>
+<!-- Swiper -->
+<div class="swiper-container gallery-top swiper-container-horizontal">
+    <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+        <div class="swiper-slide swiper-slide-active" style=""><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide swiper-slide-next" ><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide" ><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide" ><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide" ><img src="images/bg.jpeg" alt=""/></div>
+    </div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next swiper-button-white"></div>
+    <div class="swiper-button-prev swiper-button-white swiper-button-disabled"></div>
+</div>
+<div class="swiper-container gallery-thumbs swiper-container-horizontal">
+    <div class="swiper-wrapper" style="transform: translate3d(306px, 0px, 0px); transition-duration: 0ms;">
+        <div class="swiper-slide swiper-slide-active" style="margin-right: 10px;"><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide swiper-slide-next"><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide" ><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide"><img src="images/bg.jpeg" alt=""/></div>
+        <div class="swiper-slide"><img src="images/bg.jpeg" alt=""/></div>
+    </div>
+</div>
+
+<!-- Swiper JS -->
+<script src="js/swiper-3.3.1.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+/*    var galleryTop = new Swiper('.gallery-top', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 10
+    });
+    var galleryThumbs = new Swiper('.gallery-thumbs', {
+        spaceBetween: 10,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+    });
+    galleryTop.params.control = galleryThumbs;
+    galleryThumbs.params.control = galleryTop;
+
+    */
+
+
+    var name = 'window',
+            obj = {
+                name:'obj',
+                getName:function(){
+                    console.log(this.name)
+                },
+                getNameFunc:function(){
+                    return function(){
+                        console.log(this.name)
+                    }
+                },
+                getNameFunc2 : function(){
+                    var that = this;//that ＝ obj
+                    return function(){
+                        console.log(that.name)
+                    }
+                }
+            },
+            getName = obj.getName,
+            getNameFunc = obj.getNameFunc,
+            getName2 = obj.getNameFunc(),
+            getName3 = getNameFunc(),
+            getNameFunc2 = obj.getNameFunc2,
+            getName4 = obj.getNameFunc2(),
+            getName5 = getNameFunc2;
+
+    obj.getName();
+    getName();
+
+    obj.getNameFunc()();
+    getNameFunc()();
+    getName2();
+    getName3();
+
+    obj.getNameFunc2()();
+
+    getNameFunc2()();
+    getName4();
+    getName5();
+
+    setTimeout(obj.getNameFunc(),10);
+    setTimeout(getNameFunc(),10);
+
+    setTimeout(obj.getNameFunc2(),10);
+    setTimeout(getNameFunc2(),10);
+    setTimeout(getName4,10);
+    setTimeout(getName5,10);
+
+</script>
+
+
+</body></html>

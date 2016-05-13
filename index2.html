@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <title>our</title>
+    <link rel="stylesheet" href="css/css.css"/>
+    <link rel="stylesheet" href="css/swiper.min.css"/>
+</head>
+<body>
+<div class="yo">
+    <div class="left "></div>
+    <div class="right "></div>
+    <h1>YO!</h1>
+</div>
+<header>
+    <ul class="nav">
+        <li class="fouse navline">主页</li>
+        <li>文章</li>
+        <li>相册</li>
+        <li>心情</li>
+    </ul>
+</header>
+<section>
+    <div class="top">
+        <a>SX</a>F<a>&&</a>F<a>HJ's</a>&nbsp;F<a>-</a>live
+        <p>——这并只是一个博客</p>
+    </div>
+    <div class="left" style="overflow: hidden">
+        <div class="home"  >
+            <div class="main">
+                <span class="hello"></span>
+            </div>
+        </div>
+        <div class="log"  >
+            <div class="main">
+                <ul>
+                </ul>
+                <div class="bottom" data-type="log">
+
+                </div>
+            </div>
+        </div>
+        <div class="photo"  >
+            <div class="main">
+                <div class="header">共x个相册，xx张照片</div>
+                <ul class="photo-content">
+
+                </ul>
+            </div>
+            <div class="bottom" data-type="photo">
+
+            </div>
+        </div>
+        <div class="mood">
+            <div class="main">
+                <ul>
+                </ul>
+                <div class="bottom" data-type="mood">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="about">
+            <div class="header">
+
+            </div>
+        </div>
+    </div>
+</section>
+<div class="pop blog-pop" style="display: none">
+    <div class="pop-main">
+        <div class="x" onclick="closeBlogPop()">X</div>
+        <div class="pop-header">啊啊啊啊啊</div>
+        <div class="pop-content">
+        </div>
+    </div>
+</div>
+<div class="photo-pop-bg" style="display: none">
+    <div class="photo-pop-main">
+        <div class=" photo-pop" >
+            <div class="x">X</div>
+            <div class="photo-name">1111</div>
+            <div class="swiper-container gallery-top" >
+                <div class="swiper-wrapper" >
+
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next swiper-button-black"></div>
+                <div class="swiper-button-prev swiper-button-black "></div>
+            </div>
+            <div class="swiper-container gallery-thumbs s-photo">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" ><img src="images/bg.jpeg" alt=""/></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/typed.min.js"></script>
+<script src="js/jquery.touchSwipe.js"></script>
+<script src="js/swiper-3.3.1.min.js"></script>
+<script>
+
+
+
+window.onload = function () {
+    var a = {o:1};
+    var b = a;
+    var c =a
+    console.log(c === b)
+        Yo();
+    $.ajax({
+        url:'app.js',
+        dataType:'json',
+        success:function(e){
+            console.log(e)
+        },
+        error:function(e){
+            console.log(e)
+        }
+    })
+    //给导航加效果
+        for (var i = 0; i < $('.nav>li').length; i++) {
+            $('header>ul>li').eq(i).on('click', function () {
+                addAndRemoveClass('.nav>li', 'fouse navline', this);
+                $('.left').animate({
+                    scrollTop:divHeight*($(this).index())
+                })
+                //点击的时候字体颜色
+            }).on('mouseover', function () {
+                addAndRemoveClass('.nav>li', 'navline', this)
+                //点击的时候下划线
+            }).on('mouseout',function(){
+                if(!$('.nav>.fouse').hasClass('navline')){
+                    $(this).removeClass('navline');
+                    $('.nav>.fouse').addClass('navline')
+                }
+            })
+        }
+    //进入后请求数据
+        $.ajax({
+            url: 'blog_tit.txt',//数据路径
+            dataType: 'json',
+            success: function (r) {
+
+                // 0——log， 1——mood，2——pohto
+/*
+                 console.log(r[0])
+*/
+                var log = r[0];
+                var mood = r[1];
+                var photo = r[2];
+                blogStart(log.log,'log',log);
+                blogStart(mood.mood,'mood',mood);
+                $('.photo .header').html('共'+ photo.length+'个相册,'+photo.all+'张照片');
+                for(var i =0;i<photo.photo.length;i++){
+                    if(photo.photo[i].name.length>=7){
+                        var imgN =photo.photo[i].name.substring(0,6)+'...'
+                    }else{
+                        var imgN =photo.photo[i].name
+                    }
+                    $('.photo-content').html($('.photo-content').html()+"<li onclick='showphoto("+photo.photo[i].id+")' data-name='"+photo.photo[i].name+"'><img src='"+photo.photo[i].img+"'/><span>"+imgN+'('+photo.photo[i].max+'张)</span></li>')
+                }
+                blogpage(photo.length,4,'photo')
+            },
+            error:function(e){
+                console.log(e)
+            }
+        })
+        //ajax测试
+    };
+
+
+    function pageAjax(e){
+        //发请求重新加载
+        var type = $(e).parent().data('type');
+        var page = $(e).data('n');
+        console.log(type+' '+page)
+    }
+
+    function showphoto(id){
+        $.ajax({
+            url:'photoC.txt',
+            dataType:'json',
+            success:function(e){
+                $('.photo-pop-bg').show()
+                for(var i = 0;i< e.photo.length;i++){
+                   var div = "<div class='swiper-slide' ><img src='"+ e.photo[i].img+"'/></div>";
+                   $('.swiper-wrapper').html($('.swiper-wrapper').html()+div)
+               }
+                var galleryTop = new Swiper('.gallery-top', {
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    spaceBetween: 0
+                });
+                var galleryThumbs = new Swiper('.gallery-thumbs', {
+                    spaceBetween: 0,
+                    centeredSlides: true,
+                    slidesPerView: 'auto',
+                    touchRatio: 0.2,
+                    slideToClickedSlide: true
+                });
+                galleryTop.params.control = galleryThumbs;
+                galleryThumbs.params.control = galleryTop;
+            }
+        })
+    }//弹出photo pop
+
+
+    function showBlog(e){
+        //发送请求 将资料传入
+        var id = $(e).parent().data().id;
+        $('.blog-pop').show()
+        $.ajax({
+            url:'blog.txt',
+            data:id,
+            dataType:'JSON',
+            success:function(e){
+                $('.blog-pop .pop-header').html(e.head);
+                $('.blog-pop .pop-content').html(e.content);
+            }
+        })
+    }
+    function blogStart(o,c,l){
+        var li = '';
+        $('.'+c+' ul').html(' ');
+        var cl = c!='mood' ? " onclick='showBlog(this)'" :' '
+
+        for(var i = 0;i< o.length;i++){
+            li += "<li data-id='"+o[i].id+"'"+">"+'<a'+cl+'>'+o[i].content+'</a><span>'+o[i].time+'</span></li>'
+        }
+        $('.'+c+' ul').html(li);
+        blogpage(l.length, o.length,c)
+    }
+    function blogpage(l,m,cla){
+        var max = l % m ==0 ? (l / m) : parseInt((l / m))+1;
+        var a = '';
+        var c;
+        for(var i = 0 ; i < max;i++){
+            if(i == 0){
+                c = "class='add'";
+            }else{
+                c = '';
+            }
+            a += '<a '+c+" onclick='pageAjax(this)'"+" data-n='"+(i+1)+"'"+'>'+(i+1)+'</a>&nbsp;';
+
+        }
+        a = '<a data-n="first"'+" onclick='pageAjax(this)'"+'>&lt;&lt;</a>&nbsp;' + a + '<a data-n="last"'+" onclick='pageAjax(this)'"+'>&gt;&gt;</a>';
+        $('.'+cla+' .bottom').html(a)
+    }
+
+
+    //第一页
+    $(function () {
+        $(".hello").typed({
+            strings: ["哈哈哈哈<h1>ggg</h1>aaasd"],
+            typeSpeed: 100
+        });
+    });
+
+    function addAndRemoveClass(e, c, t) {
+        $(e).removeClass(c);
+        $(t).addClass(c)
+    }
+    //通用
+
+
+
+    function closeBlogPop(){
+        $('.blog-pop').hide().children('div').children('.pop-content').html(' ')
+    }
+    function openBlogPop(){
+        console.log(this)
+    }
+
+    $('.photo-pop .x').on('click',function(){
+        $('.photo-pop-bg').hide()
+        $('.swiper-wrapper').html('')
+    })
+    //关闭photo pop
+
+    $.fn.scrollUnique = function() {
+        return $(this).each(function() {
+            var eventType = 'mousewheel';
+            // 火狐是DOMMouseScroll事件
+            if (document.mozHidden !== undefined) {
+                eventType = 'DOMMouseScroll';
+            }
+            $(this).on(eventType, function(event) {
+                // 一些数据
+                var scrollTop = this.scrollTop,
+                        scrollHeight = this.scrollHeight,
+                        height = this.clientHeight;
+
+                var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta : -(event.originalEvent.detail || 0);
+
+                if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
+                    // IE浏览器下滚动会跨越边界直接影响父级滚动，因此，临界时候手动边界滚动定位
+                    this.scrollTop = delta > 0? 0: scrollHeight;
+                    // 向上滚 || 向下滚
+                    event.preventDefault();
+                }
+            });
+        });
+    };
+    //从张鑫旭那里偷来的 子元素滚动窗口不滚动
+
+
+    //进入页面
+    function Yo(){
+        var a = localStorage.getItem('yo');
+        if(a){
+            $('.yo').hide()
+        }else{
+            hello()
+            localStorage.setItem('yo','true')
+        }
+    }
+    function hello(){
+        $('.yo .left').attr('id','left');
+        $('.yo .right').attr('id','right');
+        setTimeout(function(){
+            $('.yo').attr('id','yo')
+        },2000)
+        setTimeout(function(){
+            $('.yo').hide()
+        },4000)
+    }
+
+
+
+    //翻页
+    var divHeight = $('.left>div').eq(0).innerHeight();
+    $('div').eq(0).addClass('div');
+    $(window).resize(function(){
+        divHeight = $('.left>div').eq(0).innerHeight();
+    });
+    $('body').animate({
+        scrollTop:0
+    })
+    $(".left>div").swipe(
+            {
+                swipe:function(event,direction) {
+                    var le = $(this).index()+1;
+                    if(direction == 'up'){
+                        //往下翻页
+                        var le = $(this).index()+1;
+                        if($(this).index()!=$('.left>div').length-1){
+                            $('.left').animate({
+                                scrollTop:divHeight*le
+                            })
+                            addAndRemoveClass('.nav>li', 'fouse navline',$('.nav>li').eq(le));
+                            $(this).removeClass('div');
+                            $('body>div').eq(le).addClass('div')
+                        }
+                    }else if(direction == 'down'){
+                        //往上翻页
+                        var le = $(this).index()-1;
+                        if($(this).index()!=0){
+                            $('.left').animate({
+                                scrollTop:divHeight*le
+                            })
+                            addAndRemoveClass('.nav>li', 'fouse navline',$('.nav>li').eq(le));
+                            $(this).removeClass('div');
+                            $('body>div').eq(le).addClass('div')
+                        }
+                    }
+                }
+            }
+    );
+
+
+</script>
+</html>

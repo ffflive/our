@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <title>our</title>
+    <link rel="stylesheet" href="css/css.css?08"/>
+</head>
+<body>
+<div class="yo">
+    <div class="left "></div>
+    <div class="right "></div>
+    <h1>YO!</h1>
+</div>
+<header>
+    <ul class="nav">
+        <li class="fouse navline">主页</li>
+        <li>文章</li>
+        <li>相册</li>
+        <li>心情</li>
+    </ul>
+</header>
+<section>
+    <div class="top">
+        <a>SX</a>F<a>&&</a>F<a>HJ's</a>&nbsp;F<a>-</a>live
+        <p>——这并只是一个博客</p>
+    </div>
+    <div class="left">
+        <div class="home"  >
+            <div class="main">
+                <span class="hello"></span>
+            </div>
+        </div>
+        <div class="log"  >
+            <div class="main">
+                <ul>
+                </ul>
+                <div class="bottom" data-type="log">
+
+                </div>
+            </div>
+        </div>
+        <div class="photo"  >3</div>
+        <div class="mood">
+            <div class="main">
+                <ul>
+                </ul>
+                <div class="bottom" data-type="mood">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+
+    </div>
+</section>
+<div class="pop blog-pop">
+    <div class="pop-main">
+        <div class="x" onclick="closeBlogPop()">X</div>
+        <div class="pop-header">啊啊啊啊啊</div>
+        <div class="pop-content">
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/js.js"></script>
+<script src="js/typed.min.js"></script>
+<script>
+    window.onload = function () {
+        Yo();
+        bolgH();
+        for (var i = 0; i < $('.nav>li').length; i++) {
+            $('header>ul>li').eq(i).on('click', function () {
+                addAndRemoveClass('.nav>li', 'fouse navline', this);
+                //点击的时候字体颜色
+            }).on('mouseover', function () {
+                addAndRemoveClass('.nav>li', 'navline', this)
+                //点击的时候下划线
+            }).attr('onclick', "conScroll(" + i + ")")
+            //加个滚动事件
+
+        }
+        $('section>.left').scrollUnique();
+        //子元素滚动，父元素不滚动
+        $('.nav').eq(0).on('mouseout', function () {
+            addAndRemoveClass('.nav>li', 'navline', $('body>header li').eq($('body>header .fouse').index()))
+        });
+        //给导航加效果
+        $.ajax({
+            url: 'our.txt',//数据路径
+            dataType: 'json',
+            success: function (r) {
+                pageData(r.log,12,0)//日志排页bolkM.log
+                pageData(r.mood,5,1)//心情排页bolkM.mood
+//                console.log(bolkM)
+            },
+            error:function(e){
+                console.log(e)
+            }
+        })
+        //ajax测试
+
+    };
+    var lLength = 0;
+    var bolkM= {};
+    $(function () {
+        $(".hello").typed({
+            strings: ["哈哈哈哈<h1>ggg</h1>aaasd"],
+            typeSpeed: 100
+        });
+    });
+
+    function addAndRemoveClass(e, c, t) {
+        $(e).removeClass(c);
+        $(t).addClass(c)
+    }
+    //通用
+
+    //存数据用
+    function pageData(r,max,type){
+        //type 0是日志  1是心情  2是照片
+        var j=0;
+        if(type==0){
+            bolkM.log=[];
+            for (var i = 0; i < Math.ceil(r.length/max); i++) {
+                bolkM.log[i] = []
+                for(var n =0;n<max;n++){
+                    if(r[j]!=undefined){
+                        bolkM.log[i][n]= r[j]
+                        j++;
+                    }
+                }
+            }
+            page(bolkM.log,0,'log')
+        }else if(type==1){
+            bolkM.mood=[];
+            for (var i = 0; i < Math.ceil(r.length/max); i++) {
+                bolkM.mood[i] = []
+                for(var n =0;n<max;n++){
+                    if(r[j]!=undefined){
+                        bolkM.mood[i][n]= r[j]
+                        j++;
+                    }
+                }
+            }
+            page(bolkM.mood,0,'mood')
+        }else{
+            bolkM.photo=[];
+        }
+    }
+    //分页事件，传入数据下标和class。创建内容以及更新分页
+    //传入obj index class 创建内容，给li绑定事件，打开pop，后续需要想办法判断几个栏目
+    //分页的时候需要加入每页点击事件。
+    function page(o,i,c){
+        var bot = $('.'+c+' .bottom');
+        var ul =$('.'+c+">.main ul");
+        ul.html(' ');
+        if(i!=-2){
+            //初始化运行会无下标，传入的时候自动－1 所以－2不运行
+            for(var n = 0;n< o[i].length;n++){
+                //内容
+                var li = "<li data-id="+o[i][n].id+"><a>"+o[i][n].content+"</a><span>"+o[i][n].time+"</span></li>"
+                ul.html(ul.html()+li)
+            }
+            var p ='';
+            for(var n = 0;n< o.length;n++){
+                //分页
+                //第一页最后一页之间添加
+                if(n==i){
+                    p=p+"<a class='add'>"+(n+1)+'</a>&nbsp;'
+                }else{
+                    p=p+"<a>"+(n+1)+"</a>&nbsp;"
+                }
+            }
+            bot.html('<a data-n="first"><<</a>&nbsp;&nbsp;'+p+'&nbsp;<a data-n="last">>></a>')
+        }
+        getpage(c)
+    }
+    //分页监听
+    function getpage(c){
+        $('.'+c+' .bottom a').on('click',function(){
+            var d,
+                t=$(this).parent().data('type'),
+                a=$(this).data('n');
+            //判断类型
+            if(t == 'log'){
+                d=bolkM.log
+            }else if(t == 'photo'){
+                d = bolkM.photo
+            }else if(t == 'mood'){
+                d =bolkM.mood
+            }
+            if(a!=undefined){
+                if(a=='first'){
+                    page(d,0,t)
+                }else if(a == 'last'){
+                    page(d, d.length-1,t)
+                }
+            }else{
+                page(d,$(this).index()-1,t)
+            }
+        })
+    }
+
+/*
+    遐想效果  待议
+    var mouseD;
+    var a=0;
+    $(document).on('mousedown',function(){
+        a=0
+        mouseD = setInterval(function(){
+            a++
+        },100)
+    })
+    $(document).on('mouseup',function(){
+        window.clearInterval(mouseD)
+        if(a>=5){
+            console.log(1)
+        }
+    })*/
+function closeBlogPop(){
+    $('.blog-pop').hide().children('div').children('.pop-content').html(' ')
+}
+function openBlogPop(){
+    console.log(this)
+}
+
+</script>
+</html>

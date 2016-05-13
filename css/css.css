@@ -1,0 +1,716 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: 'microsoft yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+html{
+    background: url("../images/bg.jpeg")no-repeat center 40%;
+    background-size: cover;
+    height: 100%;
+    min-width: 320px;
+    overflow: hidden;
+}
+body{
+    background: rgba(255,255,255,.3);
+    height: 100%;
+    min-width: 320px;
+    border: 1px solid transparent;
+    overflow: hidden;
+}
+
+/*typed插件光标*/
+
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+
+/*欢迎页面*/
+.yo{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: black;
+    z-index: 9999;
+}
+.yo,.yo>div{
+    -webkit-transition: -webkit-transform 3s, opacity 3s;
+    -moz-transition-property:opacity, -o-transform;
+    -moz-transition-duration:  3s, 3s;
+    -o-transition-property:opacity, -o-transform;
+    -o-transition-duration: 3s, 3s;
+    transition-property: opacity, transform;
+    transition-duration: 3s, 3s;
+}
+#yo{
+   opacity: 0;
+}
+.yo>div{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.yo>.left{
+    background: rgba(255,255,255,.4);
+    -webkit-transform: translate(-100%,0);
+    -moz-transform: translate(-100%,0);
+    -o-transform: translate(-100%,0);
+    transform: translate(-100%,0);
+}
+.yo>.right{
+    background: rgba(255,255,255,.4);
+    -webkit-transform: translate(100%,0);
+    -moz-transform: translate(100%,0);
+    -o-transform: translate(100%,0);
+    transform: translate(100%,0);
+}
+.yo h1{
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    color: black;
+    line-height: 50px;
+    text-align: center;
+    top: 50%;
+    font-size: 6rem;
+    margin-top:-25px;
+    z-index: 10;
+}
+.yo #left{
+    -webkit-transform: translate(100%,0);
+    -moz-transform: translate(100%,0);
+    -o-transform: translate(100%,0);
+    transform: translate(100%,0);
+}
+.yo #right{
+    -webkit-transform: translate(-100%,0);
+    -moz-transform: translate(-100%,0);
+    -o-transform: translate(-100%,0);
+    transform: translate(-100%,0);
+}
+.animate{
+    -webkit-transition: -webkit-transform 2s, opacity 2s;
+    -moz-transition-property:opacity, -o-transform;
+    -moz-transition-duration:  2s, 2s;
+    -o-transition-property:opacity, -o-transform;
+    -o-transition-duration: 2s, 2s;
+    transition-property: opacity, transform;
+    transition-duration: 2s, 2s;
+}
+
+
+/*导航*/
+header{
+    width: 100%;
+    height: 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.6);
+    min-width: 320px;
+    -webkit-transition: top 1s;
+    -moz-transition: top 1s;
+    -ms-transition: top 1s;
+    -o-transition: top 1s;
+    transition: top 1s;
+}
+header ul{
+    width: 50%;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+    -webkit-transition: -webkit-transform 1s, width 1s;
+    -moz-transition-property:width, -o-transform;
+    -moz-transition-duration:  1s, 1s;
+    -o-transition-property:width, -o-transform;
+    -o-transition-duration: 1s, 1s;
+    transition-property: width, transform;
+    transition-duration: 1s, 1s;
+
+}
+header ul li{
+    float: left;
+    list-style: none;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 25%;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+header ul li.fouse{
+    color: #5ac2e7;
+}
+header ul li.fouse:after{
+    content: ' ';
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background:-webkit-radial-gradient(bottom,rgba(255,255,255,.3),rgba(255,255,255,.2),rgba(255,255,255,.1),rgba(255,255,255,.0),rgba(255,255,255,.0));
+    z-index:-1
+}
+
+header ul li:before{
+    content: ' ';
+    width: 0%;
+    height: 2px;
+    position: absolute;
+    background: rgba(255,255,255,.8);
+    bottom: 0px;
+    border-radius: 1px;
+    -webkit-transition: width 0.3s;
+    -moz-transition: width 0.3s;
+    -ms-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    transition: width 0.3s;
+    left: -100%;
+}
+header ul li.navline:before{
+    content: ' ';
+    width: 100%;
+    left: 0;
+
+}
+
+/*主体*/
+section{
+    margin-top: 50px;
+    width: 100%;
+    height: 95%;
+    height:calc(95% - 50px);
+    height: -moz-calc(95% - 50px);
+    background: rgba(0,0,0,.6);
+    border:1px solid transparent;
+    -webkit-transition: height 1s, margin-top 1s;
+    -moz-transition-property:height, margin-top;
+    -moz-transition-duration:  1s, 1s;
+    -o-transition-property:height, margin-top;
+    -o-transition-duration: 1s, 1s;
+    transition-property: height, margin-top;
+    transition-duration: 1s, 1s;
+
+}
+section>.top{
+    padding: 20px 0px;
+    width: 100%;
+    color: #f8f8f8;
+    text-align: center;
+    line-height: 23px;
+    font-size:2.5rem;
+    text-shadow: #333 4px 4px 5px;
+}
+section>.top>a{
+    color: #c7c7c7;
+    font-size:1.7rem;
+
+}
+section>.top>p{
+    font-size: 1rem;
+    color: white;
+    width: 90%;
+    padding-left: 10%;
+    line-height: 25px;
+    display: block;
+}
+section>.left{
+    width: 95%;
+    height: 75%;
+    margin: 0 auto;
+    background: rgba(255,255,255,.4);
+    border-radius: 20px;
+    -webkit-overflow-scrolling : touch;
+}
+section>.right{
+    border: 1px solid rgba(255,255,255,.1);
+    height: 75%;
+}
+section>div{
+    -webkit-transition: width 1s;
+    -moz-transition: width 1s;
+    -ms-transition: width 1s;
+    -o-transition: width 1s;
+    transition: width 1s;
+    overflow-x: hidden;
+    overflow-y:auto;
+}
+
+@media screen and (max-width: 20000px) {
+    section>div{
+        float: left;
+        display: block;
+    }
+    section>.left>div{
+        padding: 2% 0;
+    }
+    section>.left{
+        width: 70%;
+        margin:0 2%
+    }
+    section>.right{
+        width: 25%;
+    }
+}
+@media screen and (max-width: 1200px) {
+    section>div{
+        float: left;
+        display: block;
+    }
+    section>.left>div{
+        padding: 3% 0;
+    }
+    section>.left{
+        width: 70%;
+        margin:0 2%
+    }
+    section>.right{
+        width: 25%;
+    }
+}
+@media screen and (max-width: 900px) {
+    section>div{
+        float: left;
+        display: block;
+    }
+    section>.left>div{
+        padding: 4% 0;
+    }
+    section>.left{
+        width: 70%;
+        margin:0 2%
+    }
+    section>.right{
+        width: 25%;
+    }
+}
+@media screen and (max-width: 720px) {
+    section{
+        margin-top: 0px;
+        height: 100%;
+    }
+    section>.left{
+        height: 65%;
+    }
+    section>.left>div{
+        padding: 4% 0;
+    }
+    header{
+        top: 100%;
+        margin-top: -40px;
+    }
+    header ul{
+        width: 100%;
+    }
+    section>div{
+        float: none;
+    }
+    section>.left{
+        width: 95%;
+        margin: 0 auto;
+    }
+    section>.right{
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    section{
+        margin-top: 0px;
+        height: 100%;
+    }
+    section>.left{
+        height: 65%;
+    }
+    section>.left>div{
+        padding: 5% 0;
+    }
+    header{
+        top: 100%;
+        margin-top: -40px;
+    }
+    header ul{
+        width: 100%;
+    }
+    section>div{
+        float: none;
+    }
+    section>.left{
+        width: 95%;
+        margin: 0 auto;
+
+    }
+    section>div.right{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    section{
+        margin-top: 0px;
+        height: 100%;
+    }
+    section>.left{
+        height: 65%;
+    }
+    section>.left>div{
+        padding: 7% 0;
+    }
+    header{
+        top: 100%;
+        margin-top: -40px;
+    }
+    header ul{
+        width: 100%;
+    }
+    section>div{
+        float: none;
+    }
+    section>.left{
+        width: 95%;
+        margin: 0 auto;
+    }
+    section>div.right{
+        display: none;
+    }
+}
+section .left>div{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-transition: padding .5s;
+    -moz-transition: padding .5s;
+    -ms-transition: padding .5s;
+    -o-transition: padding .5s;
+    transition: padding .5s;
+}
+
+/*主页内容*/
+.main{
+    height: 95%;
+    width: 100%;
+    padding-top: 2%;
+    border-top: 1px solid rgba(255,255,255,.6);
+    border-bottom: 1px solid rgba(255,255,255,.6);
+}
+.log ul{
+    width: 95%;
+    height: 95%;
+    margin: 0 auto;
+    padding-left: 5%;
+    overflow: hidden;
+}
+.log ul li{
+    color: #550404;
+    width: 100%;
+    height: 8%;
+    list-style-type: none;
+    line-height: 2rem;
+}
+.log ul li a{
+    display:inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    width: 70%;
+    cursor: pointer;
+}
+.log ul li span{
+    display: inline-block;
+    overflow:hidden;
+    padding-left: 5%;
+    width: 22%;
+}
+.bottom{
+    height: 6%;
+    width: 100%;
+    text-align: center;
+    line-height: 1rem;
+}
+.bottom a{
+    font-size: 0.9rem;
+    color: #550404;
+}
+.bottom a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+.bottom a.add{
+    text-decoration: underline;
+}
+
+.log ul li a:hover{
+    text-decoration: underline;
+}
+
+
+.mood>.main{
+    border: none;
+    padding: 0;
+}
+.mood ul {
+    width: 90%;
+    margin: 0 auto;
+    height: 95%;
+}
+.mood li{
+    list-style: none;
+    width: 80%;
+    height: 15%;
+    padding: 0 5%;
+    border: 1px solid white;
+    margin: 3% 0 3% 10%;
+    position: relative;
+}
+.mood li:after{
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: -15%;
+    width: 10%;
+    height: 0;
+    padding-top: 10%;
+    background: url("../images/bg.jpeg")no-repeat center;
+    background-size: cover;
+    border-radius: 100%;
+    border:1px solid #ddd;
+}
+.mood li:before{
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 25%;
+    height: 0;
+    width: 0;
+    border-top: 7px solid transparent;
+    border-left: 7px solid transparent;
+    border-right: 7px solid white;
+    border-bottom: 7px solid transparent;
+}
+.mood li a{
+    width: 100%;
+    height: 47%;
+    display: inline-block;
+    line-height: 2rem;
+    color: #fdfdfd;
+    white-space:nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.mood li span{
+    width: 100%;
+    height: 50%;
+    display: inline-block;
+    line-height: 1.5rem;
+    color: #550404;
+    font-size: 0.8rem;
+
+}
+.pop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.7);
+    z-index: 99;
+/*    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items:center;
+    -webkit-justify-content:center;
+    -webkit-align-items:center;*/
+
+}
+.pop .pop-main{
+    height: 80%;
+    width: 90%;
+    background: rgba(255,255,255,.95);
+    border-radius:20px;
+    margin: 10% auto;
+    position: relative;
+    margin-top:20px;
+}
+.pop .pop-main>.x{
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    font-size: 1.7rem;
+    color: #868686;
+    -webkit-transform: scaleX(1.2);
+    -moz-transform: scaleX(1.2);
+    -o-transform:scaleX(1.2);
+    transform: scaleX(1.2);
+    cursor: pointer;
+    font-weight: 200;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.pop .pop-header{
+    height: 40px;
+    width: 100%;
+    color: #222;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 1.5rem;
+}
+.pop .pop-content{
+    color: #3E3D3D;
+    width: 90%;
+    margin: 0 auto;
+    line-height: 1.5rem;
+    text-indent: 2rem;
+    height: 80%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+
+/*相册*/
+section .left>div.photo{
+    width: 90%;
+    margin: 0 auto;
+}
+.photo .header{
+    color: rgba(255,255,255,.9);
+}
+.photo .main{
+    border: none;
+    height: 90%;
+}
+.photo-content{
+    width: 90%;
+    margin: 0 auto;
+    height: 90%;
+    margin-top: 15px;
+}
+
+.photo-content li{
+    list-style: none;
+    float: left;
+    width: 46%;
+    height: 46%;
+    margin: 2%;
+    box-sizing: border-box;
+    border: 1px solid white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.photo-content li img{
+    max-width: 100%;
+    margin-top: -40%;
+}
+.photo-content li>span{
+    display: block;
+    width: 100%;
+    height: 20%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.4);
+    color: white;
+    line-height: 2rem;
+    -webkit-transition: bottom 0.2s;
+    -moz-transition: bottom 0.2s;
+    -ms-transition: bottom 0.2s;
+    -o-transition: bottom 0.2s;
+    transition: bottom 0.2s;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+
+
+/*照片pop*/
+.photo-pop-bg{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    background: rgba(0,0,0,.4);
+}
+.photo-pop-main{
+    width: 100%;
+    height: 100%;
+    padding-top: 9rem;
+    box-sizing: border-box;
+}
+.photo-pop{
+    width: 80%;
+    height: 65%;
+    background: rgba(255,255,255,.9);
+    border-radius: 20px;
+    overflow: hidden;
+    padding-top: 3rem;
+    margin: 0 auto;
+    position: relative;
+}
+.photo-pop .x{
+    position: absolute;
+    height: 2rem;
+    width: 2rem;
+    color: #333333;
+    right: 1rem;
+    top: 0.8rem;
+    font-size: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+}
+.photo-name{
+    position: absolute;
+    height: 2rem;
+    width: 70%;
+    color: #2D2D2D;
+    top: 1rem;
+    left: 2rem;
+    font-size: 1.2rem;
+}
+.swiper-container{
+    height: 70%;
+    width: 100%;
+    text-align: center;
+}
+.swiper-container img{
+    max-height: 90%;
+}
+.s-photo{
+    height: 30%;
+}
+.s-photo .swiper-slide{
+    width: 7.5rem;
+}
+.s-photo .swiper-slide img{
+    max-height: 90%;
+}
